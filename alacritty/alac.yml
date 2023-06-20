@@ -1,0 +1,110 @@
+import:
+#  - ~/.config/alacritty/colors.yml
+- ~/.config/alacritty/fonts.yml
+
+## Set environment variables
+env:
+  TERM: alacritty
+  WINIT_X11_SCALE_FACTOR: '1.0'
+
+## Terminal window settings
+window:
+  dimensions:
+    columns: 82
+    lines: 24
+
+  padding:
+    x: 5
+    y: 5
+
+       #font:
+        # normal:
+         #  family: "MesloLGS NF"
+
+  decorations: full
+  startup_mode: Windowed
+  dynamic_title: true
+
+  ## scrolling
+  history: 10000
+  multiplier: 3
+
+  ## Background opacity
+  opacity: 0.77
+
+scrolling:
+  history: 10000
+  multiplier: 5
+builtin_box_drawing: true
+# Bell
+#
+# The bell is rung every time the BEL control character is received.
+bell:
+  animation: EaseOutSine
+  duration: 2500
+
+  # Visual bell animation color.
+  color: '#9141ac'
+
+cursor:
+  style:
+    shape: Block
+    blinking: On
+
+  unfocused_hollow: true
+
+## Live config reload
+live_config_reload: true
+
+ipc_socket: true
+theme: 3024.dark
+
+key_bindings:
+  - { key: Paste, action: Paste }
+  - { key: Copy, action: Copy }
+  - { key: L, mods: Control, action: ClearLogNotice }
+  - { key: L, mods: Control, mode: ~Vi|~Search, chars: "\f" }
+  - {
+      key: PageUp,
+      mods: Shift,
+      mode: ~Alt,
+      action: ScrollPageUp
+    }
+  - {
+      key: PageDown,
+      mods: Shift,
+      mode: ~Alt,
+      action: ScrollPageDown
+    }
+  - {
+      key: Home,
+      mods: Shift,
+      mode: ~Alt,
+      action: ScrollToTop
+    }
+  - {
+      key: End,
+      mods: Shift,
+      mode: ~Alt,
+      action: ScrollToBottom
+    }
+
+mouse:
+  mods: { Right: null, action: PasteSelection }
+#   - Numeric identifier such as `5`
+#
+# - `action` (see key bindings for actions not exclusive to mouse mode)
+#
+# - Mouse exclusive actions:
+#
+#   - ExpandSelection
+#       Expand the selection to the current mouse cursor location.
+#
+# And optionally:
+#
+# - `mods` (see key bindings)
+mouse_bindings:
+  - { mouse: Right, action: Paste }
+
+#  - { mouse: Right,  mods: Control, action: ExpandSelection }
+#  -
