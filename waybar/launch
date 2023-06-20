@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+killall waybar 
+sleep 1 
+
+# Both Bottom
+# waybar  -c  /Area51/waybar/configBot.jsonc -s /Area51/waybar/style2.css  > /dev/null & disown
+ waybar -c /Area51/waybar/configdock -s /Area51/waybar/dock.css  > /dev/null & disown
+# waybar -c /Area51/waybar/configBot.jsonc -s /Area51/waybar/new.css  > /dev/null & disown
+
+
+
+
+
+
+
+# ## Top 
+  waybar  -c    ~/dotconfig/waybar/config.jsonc -s /home/shady/dotconfig/waybar/style2.css  > /dev/null & disown
+
+
+# ## Right top icon dock
+# waybar  -c  ~/dotconfig/waybar/config2.jsonc  -s ~/dotconfig/waybar/style2.css > /dev/null & disown
