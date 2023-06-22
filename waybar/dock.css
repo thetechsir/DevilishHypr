@@ -65,7 +65,7 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "FontAwesome";
+    font-family: "monospace";
     font-weight: bold;
     font-size: 14px;
     min-height: 0;
@@ -92,8 +92,8 @@ window#waybar {
 
 #workspaces button.active {
     background: @workspace_active_background;
-    color: #bd93f9;
-    border-radius: 9px;
+    color: #1cc345;
+    border-radius: 5px;
 
     border-top: 2px solid #808080;
     border-bottom: 2px solid #808080;
@@ -107,7 +107,7 @@ window#waybar {
 }
 
 #workspaces button:hover {
-    background: @brcyan ;
+    background: @workspace_hover_background;
     color: @workspace_hover;
     border-radius: 5px;
 }

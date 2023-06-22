@@ -19,10 +19,10 @@ fi
 mkfifo $pipe
 
 # write cava config
-config_file="/tmp/cavaWayMic"
+config_file="/tmp/polybar_cava_configmic"
 echo "
 [general]
-bars = 8
+bars = 11
 [input]
 method = pulse
 source = 2233

@@ -11,7 +11,7 @@
 
 window#waybar {
     color: #cdd6f4;
-    background-color: rgba(10, 9, 10, 0.42);
+    background-color: rgba(10, 9, 10, 0.22);
 /*    background-color: transparent;*/
 }
 
@@ -26,6 +26,7 @@ tooltip {
 #tray,
 #cpu,
 #disk,
+#memory,
 #cava,
 #custom-language,
 #custom-updates,
@@ -182,11 +183,4 @@ tooltip {
 #network {
     color: #0069AA;
     border-radius: 5px;
-}
-#memory {
-    border-radius: 10px 0px 0px 10px;
-
-    margin-left: 20px;
-    margin-right: 20px;
-    background: rgba(40, 42, 54, 0.5);
 }

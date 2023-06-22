@@ -1,0 +1,360 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 32, // Waybar height (to be removed for auto height)
+    "spacing": 8, // Gaps between modules (4px)
+    "margin-right": 15,
+    "margin-left": 15, 
+    "output": ["DP-2","DP-4","HDMI-A-1"],
+            "fixed-center": true,
+    
+    // Choose the order of the modules
+    "modules-left": ["custom/menu","disk","custom/disk_root","custom/disk_home","temperature","cpu","custom/cpu_speed","memory","wlr/taskbar","image#album-art","mpd"],
+     "modules-center": ["wlr/workspaces","sway/mode"],
+    "modules-right": ["custom/cavaIn","tray","bluetooth","pulseaudio#microphone","pulseaudio","custom/network_traffic","network","custom/weather","clock","custom/power"],
+    // Modules configuration
+    // "wlr/workspaces": {
+    //     "disable-scroll": false,
+    //     "all-outputs": true,
+    //     "on-scroll-up": "hyprctl dispatch workspace e+1",
+	// 	"on-scroll-down": "hyprctl dispatch workspace e-1",
+    //     "on-click": "activate",
+    //     "format": "{icon} | {name}",
+    //      "format-icons": {
+    //          "1": "",
+    //          "2": "",
+    //          "3": "",
+    //          "4": "",
+    //          "5": "",
+    //          "6": "",
+    //          "7": "",
+    //          "urgent": "",
+    //          // "focused": "",
+    //          "default": ""
+    //      }
+    //  },
+    
+  "wlr/workspaces": {
+        "format":"{icon}",
+    //"format": "{name}: {icon}",
+    "on-click": "activate",
+    "all-outputs": true,
+    "sort-by-number": true,
+    "format-icons": {
+      "1": "1:",
+      "2": "2:",
+      "3": "3:",
+      "4": "4:",
+      "5": "5:",
+      "6": "6:",
+      "7": "7:",
+      "8": "8:",
+      "9": "9:",
+      "10": " 10:",
+     // "focused": "",
+      "default": "",
+  }
+},
+
+
+    "disk": {
+		"interval": 30,
+		"format": "<span color=\"#00a9df\">|  {percentage_used}% </span>",
+		"path": "/"
+	},
+	    "custom/cpu_speed": {
+        "interval": 10,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/cpu_speed.sh",
+        "format": "{icon} {}",
+        "format-icons": [""],
+        "escape": true,
+        "on-click": "alacritty -e htop"
+    },
+    "mpd": {
+        "format": "{title} - {artist}  ",
+        "format-disconnected": "Disconnected",
+        "format-stopped": "Stopped",
+        "max-length": 150,
+        "on-click": "exec alacritty -e ncmpcpp",
+        "on-click-right": "exec alacritty -e ncmpcpp"
+    },
+    
+    "tray": {
+        "icon-size": 28,
+        "spacing": 10
+    },
+    
+    "clock": {
+         "timezone": "America/Toronto",
+               "format-alt": " <span color=\"#FFFFFF\"></span>  {:%H:%M}  ",
+        "format": "<span color=\"#FFFFFF\"></span> {:%I:%M%p  %d/%m/%Y}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><big>{calendar}</big></tt>",
+        "on-click": "exec wezterm start -e calcure"
+        //"format-alt": "{:%d/%m/%Y} <span color=\"#FFFFFF\"></span>"
+    },
+           
+    // "cpu": {
+    //     "format": "{usage}% <span color=\"#EFCA84\"></span>",
+    //     "tooltip": false
+    // },
+        "cpu": {
+        "interval":1,
+        "format": " <span color=\"#EFCA84\">{usage}% </span><span color=\"#2f697f\">{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}</span>",
+        "format-icons": ["▁","▂","▃","▄","▅","▆","▇","█"]
+    },
+
+        "custom/cavaIn": {
+        "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+        "format": " |{}|",
+        "exec": "/Area51/waybar/cava-mic.sh",
+        "restart-interval": 1
+    
+    },
+        "custom/cavaOut": {
+        "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+        "format": "  {}  ",
+        "exec": "/Area51/waybar/cava-output.sh",
+        "restart-interval": 1,
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "actions": {
+                   "on-click-right": "mode"
+                   }
+    },
+
+
+    "memory": {
+            "exec": "/scz/bash/scripts/affect.sh",
+            "format": "<span color=\"#ff8c00\"> {}%</span>",
+             "format-alt": "<span color=\"#ff8c00\">| ram:{used:0.1f}G {}% |</span>",
+    },
+    
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+        "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "tooltip": false,
+        "format-source": " {volume}% ",
+        "format-source-muted": "󰍭 Muted",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "scroll-step": 5
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "<span color=\"#FFFFFF\">{icon}</span>  {capacity}%",
+        "format-charging": "{capacity}% <span color=\"#FF0000\"></span>",
+        "format-plugged": "{capacity}% <span color=\"#FF0000\"></span>",
+        "format-alt": "{time} <span color=\"#FF0000\">{icon}</span>",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    
+
+
+    // "pulseaudio": {
+    //     "scroll-step": 1, // %, can be a float
+    //     "format-source": "  {format_source} {volume}%   ",
+    //     "format-bluetooth": " {volume}% {icon}  {format_source}",
+    //     "format-bluetooth-muted": " {icon} {format_source}",
+    //     "format-muted": " {format_source}",
+    //             "on-click": "pamixer --default-source -t",
+    //     "on-scroll-up": "pamixer  -i 5",
+    //     "on-scroll-down": "pamixer -d 5",
+    //     "format-icons": {
+    //         "headphone": "",
+    //         "hands-free": "",
+    //         "headset": "",
+    //         "phone": "",
+    //         "portable": "",
+    //         "car": "",
+    //         "default": [""]
+    //     },
+    //     "on-click": "pavucontrol"
+    // },  
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{icon} <span color=\"#FFFFFF\">{volume}%</span>",
+        //"format-bluetooth": "{volume}% <span color=\"#00FF00\">{icon} </span>",
+        //"format-bluetooth-muted": "MUTE 婢 ",
+        //"format-muted": "MUTE 婢",
+        //"format-source": "{volume}% <span color=\"#00FF00\"></span>",
+        //"format-source-muted": "",
+        //"format-icons": {
+        //    "default": ["奄", "奄", "", "", "", ""]
+       // "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": "婢 {icon} {format_source}",
+        "format-muted": "婢 {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "󰋋",
+            "default": ["奄", "奄", "", "", "", ""]
+        },
+        "on-double-click": "pavucontrol",
+        "on-click": "pulsemixer --unmute",
+        "on-click-right": "pulsemixer --mute"
+    },
+
+
+
+        "pulseaudio#microphone": {
+        "format": "<span color=\"#df00ab\">{format_source}</span>",
+        "format-source": " {volume}%",
+        "format-source-muted": "<span color=\"#800002\"> Muted</span>",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "scroll-step": 5
+    },
+
+"custom/weather": {
+    "exec": "python3 /Area51/waybar/scripts/wttr.py",
+    "restart-interval": 300,
+    "return-type": "json",
+    "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/$(440)"
+    // "format-alt": "{alt}",
+},
+
+    "custom/cycle_wall":{
+    "format":" ",
+    "on-click": "~/.config/hypr/bin/changeWallpaper",
+    "tooltip-format": "Change wallpaper",
+	},
+    
+    "custom/menu": {
+    "format": " <span color=\"#00a9df\"></span> ",
+    "tooltip": false,
+    "on-click": "pkill rofi || /scz/rofi/rofiWindow.sh",
+	},
+    
+    "custom/power": {
+    "format": " <span color=\"#990000\">⏻</span> ",
+    "tooltip": false,
+    "on-click": "~/.config/hypr/scripts/checkmenu.sh",
+	},
+
+   "custom/filemanager": {
+        "format": "  ",
+        "interval": "once",
+        "on-click": "exec 'Thunar'",
+    },
+
+  "custom/libre": {
+        "format": "  ",
+        "interval": "once",
+        "on-click": "exec libreoffice",
+  },
+
+    "custom/browser": {
+        "format": "  ",
+        "interval": "once",
+        "on-click": "exec 'firefox'",
+    },
+
+	"custom/scratchpad_indicator": {
+        "format": "   ",
+        "on-click": "exec scratchpad -g",
+        "tooltip": true,
+        "show-empty": false,
+    },
+  
+    "custom/updates": {
+        "format": "{}",
+        "exec": "~/.config/hypr/waybar/scripts/update-sys",
+        "on-click": "~/.config/hypr/waybar/scripts/update-sys update",
+        "interval": 30,
+        "tooltip": true
+    },
+
+
+        "custom/disk_home": {
+        "format": "<span color='#317f76'> {} </span>",
+        "interval": 3600,
+        "exec": "df -h --output=avail $HOME | tail -1 | tr -d ' '",
+        "tooltip": "false"
+    },
+        "custom/temp": {
+        "format": "{}",
+        "interval": 3600,
+        "exec": "/home/slime/waybar/scripts/temp.py",
+        "tooltip": "false"
+    },
+
+    "disk": {
+    "interval": 30,
+    "format": "{percentage_free}% {path}",
+    "path": "/"
+    },
+
+        "temperature": {
+//      "thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "format-critical": "{temperatureC}°C {icon}",
+        "format": "CPU <span color='#7f2b26'>{icon}</span> {temperatureC}°C",
+        "format-icons": ["", "", ""],
+        "tooltip": false
+    },
+    "hyprland/window": {
+		"format": "| {} |",
+		"max-length": 50,
+		"separate-outputs": true
+	},
+
+    "network": {       
+        "format-wifi": "<span color=\"#73f990\"></span> {essid} ({signalStrength}%)說",
+        "format-ethernet": "{ipaddr}/{cidr} <span color=\"#FFFFFF\"></span>",
+        "tooltip-format": "{ifname} via {gwaddr} <span color=\"#FFFFFF\"></span>",
+        "format-linked": "{ifname} (No IP) <span color=\"#FFFFFF\"></span>",
+        "format-disconnected": "Disconnected 轢",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "mode",
+        "on-click-right": "nm-connection-editor"
+    },
+
+
+           "custom/network_traffic": {
+           "exec": "~/dotconfig/waybar/scripts/network_traffic.sh",
+           "return-type": "json",
+           "format": "{}",
+           //"format-alt": " Net: {}",    // optional
+           "on-click": "~/.config/rofi/bin/network_menu",
+           "on-click-right": "nm-connection-editor",
+           "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        },
+            "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 24,
+        "max-length": 55,
+        "all-outputs": false,
+        "tooltip-format": "{name}: {icon}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": [
+            "rofi","alacritty","kitty","pavucontrol","obs"
+         ]
+    },
+
+
+"image#album-art": {
+    "path": "/tmp/mpd_art",
+    "size": 32,
+    "interval": 5,
+    "on-click": "mpc toggle"
+},
+
+
+
+}

@@ -1,94 +1,62 @@
 {
     "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 32, // Waybar height (to be removed for auto height)
-    "spacing": 8, // Gaps between modules (4px)
-    "margin-right": 15,
-    "margin-left": 15, 
-    "output": ["DP-2","DP-4","HDMI-A-1"],
+    "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 35, // Waybar height (to be removed for auto height)
+    "spacing": 0, // Gaps between modules (4px)
+  //      "output": ["DP-3","DP-4"],
             "fixed-center": true,
     
     // Choose the order of the modules
-    "modules-left": [ "custom/disk_root","custom/disk_home","temperature","cpu","custom/cpu_speed","wlr/taskbar"],
-     "modules-center": ["wlr/workspaces","sway/mode"],
-    "modules-right": ["custom/cavaOut","tray","bluetooth","pulseaudio#microphone","pulseaudio","custom/network_traffic","network","custom/weather","clock"],    
-    // Modules configuration
-    // "wlr/workspaces": {
-    //     "disable-scroll": false,
-    //     "all-outputs": true,
-    //     "on-scroll-up": "hyprctl dispatch workspace e+1",
-	// 	"on-scroll-down": "hyprctl dispatch workspace e-1",
-    //     "on-click": "activate",
-    //     "format": "{icon} | {name}",
-    //      "format-icons": {
-    //          "1": "",
-    //          "2": "",
-    //          "3": "",
-    //          "4": "",
-    //          "5": "",
-    //          "6": "",
-    //          "7": "",
-    //          "urgent": "",
-    //          // "focused": "",
-    //          "default": ""
-    //      }
-    //  },
+    "modules-left": [ "custom/gpu_usage","disk","custom/disk_root","custom/disk_home","memory","cpu","temperature","custom/network_traffic"],
+     "modules-center": ["wlr/workspaces"],
+    "modules-right": ["tray", "custom/updates", "custom/scratchpad_indicator", "network", "pulseaudio","pulseaudio#microphone", "custom/weather", "clock", "custom/power"],
     
-  "wlr/workspaces": {
+    // Modules configuration
+    "wlr/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": true,
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+		"on-scroll-down": "hyprctl dispatch workspace e-1",
+        "on-click": "activate",
         "format": "{icon}",
-    //"format": "{name}: {icon}",
-    "on-click": "activate",
-    "all-outputs": true,
-    "sort-by-number": true,
-    "format-icons": {
-      "1": "1  ",
-      "2": "2  ",
-      "3": "3  ",
-      "4": "4  ",
-      "5": "5  ",
-      "6": "6  ",
-      "7": "7  ",
-      "8": "8  ",
-      "9": "9  ",
-      "10": " 10 ",
-     // "focused": "",
-      "default": "",
-  }
-},
-
-
+         "format-icons": {
+             "1": "",
+             "2": "",
+             "3": "",
+             "4": "",
+             "5": "",
+             "6": "",
+             "7": "",
+             "urgent": "",
+             "focused": "",
+             "default": ""
+         }
+     },
+    
     "disk": {
 		"interval": 30,
-		"format": "<span color=\"#00a9df\">|  {percentage_used}% </span>",
+		"format": "<span color=\"#C778DD\"> {percentage_used}% </span>",
 		"path": "/"
 	},
-	    "custom/cpu_speed": {
-        "interval": 10,
-        "return-type": "json",
-        "exec": "~/.config/waybar/modules/cpu_speed.sh",
-        "format": "{icon} {}",
-        "format-icons": [""],
-        "escape": true,
-        "on-click": "alacritty -e htop"
-    },
+	
     "mpd": {
         "format": "{title} - {artist} ",
         "format-disconnected": "Disconnected",
         "format-stopped": "Stopped",
-        "max-length": 150,
-        "on-click": "exec alacritty -e ncmpcpp",
-        "on-click-right": "exec alacritty -e ncmpcpp"
+        "max-length": 50,
+        "on-click": "~/.config/rofi/bin/music",
+        "on-click-right": "alacritty -e ncmpcpp"
     },
     
     "tray": {
-        "icon-size": 28,
+        "icon-size": 21,
         "spacing": 10
     },
     
     "clock": {
-         "timezone": "America/Toronto",
-               "format-alt": " <span color=\"#FFFFFF\"></span>  {:%H:%M}  ",
-        "format": "<span color=\"#FFFFFF\"></span> {:%I:%M%p  %d/%m/%Y}",
+        // "timezone": "Asia/Dhaka",
+               "format": "  {:%H:%M}  ",
+        "format-alt": "<span color=\"#FFFFFF\"></span> {:%I:%M%p  %d/%m/%Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><big>{calendar}</big></tt>",
         "on-click": "exec wezterm start -e calcure"
         //"format-alt": "{:%d/%m/%Y} <span color=\"#FFFFFF\"></span>"
@@ -100,21 +68,29 @@
     // },
         "cpu": {
         "interval":1,
-        "format": "<span color=\"#EFCA84\">{usage}%  </span><span color=\"#2f697f\">{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}</span>",
+        "format": "<span color=\"#62AEEF\">{usage}%  </span><span color=\"#00FFE0\">{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}</span>",
         "format-icons": ["▁","▂","▃","▄","▅","▆","▇","█"]
     },
+"custom/gpu_usage": {
+    // "exec": "command -v radeontop >/dev/null 2>&1 && radeontop -d - -l 1 | tr -d '\n' | cut -s -d ',' -f3 | cut -s -d ' ' -f3 | tr -d '%' | awk '{ print $1 }' | tr -d '\n' || echo 'No radeontop'",
+    "exec": "radeontop -d - -l 1 | tr -d '\n' | cut -s -d ',' -f3 | cut -s -d ' ' -f3 | tr -d '%' | awk '{ print $1 }' | tr -d '\n'",
+    "exec-if": "command -v radeontop",
+    "format": "{}% ﬙",
+    "interval": 3,
+    "format-tooltip": "GPU Usage",
+},
 
         "custom/cavaIn": {
         "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
         "format": " |{}|",
-        "exec": "/Area51/waybar/cava-mic.sh",
+        "exec": "~/.config/waybar/cava-mic.sh",
         "restart-interval": 1
     
     },
         "custom/cavaOut": {
         "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
-        "format": "  {}  ",
-        "exec": "/Area51/waybar/cava-output.sh",
+        "format": "|{}|",
+        "exec": "~/.config/waybar/cava-output.sh",
         "restart-interval": 1,
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
@@ -125,7 +101,7 @@
 
 
     "memory": {
-        "format": "<span color=\"#ff8c00\">| ram:{used:0.1f}G {}% |</span>"
+        "format": "<span color=\"#62AEEF\">| ram:{used:0.1f}G {}% |</span>"
     },
     
     "backlight": {
@@ -159,7 +135,7 @@
     },
     
     "network": {       
-        "format-wifi": "<span color=\"#73f990\"></span> {essid} ({signalStrength}%)說",
+        "format-wifi": "<span color=\"#62AEEF\">說 </span> {essid} ({signalStrength}%)",
         "format-ethernet": "{ipaddr}/{cidr} <span color=\"#FFFFFF\"></span>",
         "tooltip-format": "{ifname} via {gwaddr} <span color=\"#FFFFFF\"></span>",
         "format-linked": "{ifname} (No IP) <span color=\"#FFFFFF\"></span>",
@@ -191,15 +167,15 @@
     // },  
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{icon} <span color=\"#FFFFFF\">{volume}%</span>",
-        //"format-bluetooth": "{volume}% <span color=\"#00FF00\">{icon} </span>",
-        //"format-bluetooth-muted": "MUTE 婢 ",
-        //"format-muted": "MUTE 婢",
-        //"format-source": "{volume}% <span color=\"#00FF00\"></span>",
-        //"format-source-muted": "",
-        //"format-icons": {
+        // "format": "{volume}% <span color=\"#FFFFFF\">{icon}</span>",
+        // "format-bluetooth": "{volume}% <span color=\"#00FF00\">{icon} </span>",
+        // "format-bluetooth-muted": "MUTE 婢 ",
+        // "format-muted": "MUTE 婢",
+        // "format-source": "{volume}% <span color=\"#00FF00\"></span>",
+        // "format-source-muted": "",
+        // "format-icons": {
         //    "default": ["奄", "奄", "", "", "", ""]
-       // "format": "{icon} {volume}%",
+        "format": "{icon} {volume}% {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": "婢 {icon} {format_source}",
         "format-muted": "婢 {format_source}",
@@ -213,21 +189,10 @@
         "on-click": "pulsemixer --unmute",
         "on-click-right": "pulsemixer --mute"
     },
-
-
-
-        "pulseaudio#microphone": {
-        "format": "<span color=\"#e718b6\">{format_source}</span>",
-        "format-source": " {volume}%",
-        "format-source-muted": " Muted",
-        "on-click": "pamixer --default-source -t",
-        "on-scroll-up": "pamixer --default-source -i 5",
-        "on-scroll-down": "pamixer --default-source -d 5",
-        "scroll-step": 5
-    },
+    
 
 "custom/weather": {
-    "exec": "python3 /Area51/waybar/scripts/waybar-wttr.py",
+    "exec": "python3 ~/waybar/scripts/waybar-wttr.py",
     "restart-interval": 300,
     "return-type": "json",
     "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/$(440)"
@@ -241,7 +206,7 @@
 	},
     
     "custom/menu": {
-    "format": " <span color=\"#00a9df\"> </span> ",
+    "format": " <span color=\"#000000\"> </span> ",
     "tooltip": false,
     "on-click": "pkill rofi || ~/.config/rofi/bin/launcher",
 	},
@@ -287,7 +252,7 @@
 
 
         "custom/disk_home": {
-        "format": "<span color='#317f76'> {} </span>",
+        "format": "<span color='#aaaa00'> {} </span>",
         "interval": 3600,
         "exec": "df -h --output=avail $HOME | tail -1 | tr -d ' '",
         "tooltip": "false"
@@ -299,7 +264,7 @@
         "tooltip": "false"
     },
     "custom/disk_root": {
-        "format": "<span color='#bde000'> {} </span>",
+        "format": "<span color='#55ffff'> {} </span>",
         "interval": 3600,
         "exec": "df -h --output=avail / | tail -1 | tr -d ' '",
         "tooltip": "false"
@@ -309,7 +274,7 @@
         "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C {icon}",
-        "format": "CPU <span color='#7f2b26'>{icon}</span> {temperatureC}°C",
+        "format": "<span color='#e88939'>{icon}</span> {temperatureC}°C",
         "format-icons": ["", "", ""],
         "tooltip": false
     },
@@ -322,19 +287,7 @@
            "custom/network_traffic": {
            "exec": "~/dotconfig/waybar/scripts/network_traffic.sh",
            "return-type": "json",
-           "format": " Net: {}",    // optional
+           "format": " Net Speed: {}",    // optional
         },
-            "wlr/taskbar": {
-        "format": "{icon}",
-        "icon-size": 22,
-    "max-length": 20,
-        "all-outputs": true,
-        "tooltip-format": "{name}: {title}",
-        "on-click": "activate",
-        "on-click-middle": "close",
-        "ignore-list": [
-            "rofi"
-         ]
-    },
 
 }

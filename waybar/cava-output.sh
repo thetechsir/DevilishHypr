@@ -22,7 +22,7 @@ mkfifo $pipe
 config_file="/tmp/cavaWayOut"
 echo "
 [general]
-bars = 8
+bars = 10
 
 [output]
 method = raw

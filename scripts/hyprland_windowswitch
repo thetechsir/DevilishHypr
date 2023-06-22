@@ -1,0 +1,3 @@
+#!/bin/bash
+rofi  -show window -theme ~/.config/hypr/winutils/windowswitch.rasi  -window-thumbnail
+hyprctl dispatch bringactivetotop active
